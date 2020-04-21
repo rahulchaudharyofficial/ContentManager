@@ -7,11 +7,29 @@ export default class BaseFileUploadComponent extends LightningElement {
     @api label;
     relatedRecordId;
     isDisabled=false;
+    fieldAPIs={};
 
     connectedCallback() {
-        console.log("relatedRecord -> "+ this.relatedRecord);
-        console.log("associatedRecords -> "+ this.associatedRecords);
-        console.log("associatedRecordType -> "+ this.associatedRecordType);
-        console.log("label -> "+ this.label);
+        /*
+         *  populate fields like below if business requirement
+         * fieldAPIs[NAME_FIELD.fieldApiName] = 'account created after from connectedcallback today';
+         */
+        const recordInput = { apiName: CLIENT_CONTENT_OBJECT.objectApiName};
+
+        createRecord(recordInput) //Pass record input to API
+            .then(
+                result => {
+                    this.relatedRecordId = result.id;
+                })
+            .catch(
+                error => {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error creating related record for Document Upload component',
+                            message: error.body.message,
+                            variant: 'error',
+                        }),
+                    );
+            });
     }
 }

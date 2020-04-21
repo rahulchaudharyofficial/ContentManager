@@ -4,3 +4,5 @@
 //     SFDX: Execute SOQL Query with Currently Selected Text
 
 SELECT Id, Name FROM Account;
+
+Select Id, IsAssetEnabled, Description, FileExtension, SharingPrivacy, FileType, OwnerId, SharingOption, ContentSize,TagCsv, Title from ContentVersion
